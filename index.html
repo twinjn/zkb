@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ZKB City Wallet Demo</title>
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="icon" href="../assets/icons/icon-192.png" sizes="192x192">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -15,7 +15,7 @@
   <header class="mast">
     <div class="top">
       <div class="logo">
-        <img src="../assets/icons/zkb-kmark.svg" alt="" width="36" height="36">
+        <img src="assets/icons/zkb-kmark.svg" alt="" width="36" height="36">
         <strong>Zürcher Kantonalbank</strong>
       </div>
       <nav class="nav-icons">
@@ -49,7 +49,7 @@
 
     <section id="tab_map" class="tab active">
       <h1>Projekte in Zürich</h1>
-      <img src="../assets/img/hero-zuerich.jpg" class="hero" alt="Hero Zürich">
+        <img src="assets/img/hero-zuerich.jpg" class="hero" alt="Hero Zürich">
       <div class="actions">
         <button id="btn_add_micro" class="primary">2 CHF Mikro Beitrag</button>
         <button id="btn_locate">aktuellen Ort zeigen</button>
@@ -198,11 +198,11 @@
     <button id="btn_reset">Demo Daten zurücksetzen</button>
   </footer>
 
-  <script src="../js/app.js"></script>
+  <script src="js/app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../sw.js').catch(()=>{});
+          navigator.serviceWorker.register('sw.js').catch(()=>{});
       });
     }
   </script>

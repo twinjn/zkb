@@ -1,4 +1,4 @@
 # ZKB City Wallet v4
-Start: html/index.html im Browser öffnen.
-Ordner: html css js assets data
+Start: index.html im Browser öffnen.
+Ordner: css js assets data
 Hinweis: keine echten Konten, nur Demodaten.
