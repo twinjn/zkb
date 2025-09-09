@@ -10,7 +10,6 @@ $$('.tab_button').forEach(btn=>{
     const id=btn.dataset.tab; $$('.tab').forEach(t=>t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     if(id==='tab_map'){setTimeout(()=>map?.invalidateSize(),100)}
-    if(id==='tab_learn'){renderCards()}
   })
 })
 
@@ -67,41 +66,6 @@ const co2Factors={kaffee:0.4,oepnv:0.05,elektronik:1.2,essen:0.3};
 $('#co2_add').addEventListener('click',()=>{const k=$('#co2_cat').value; const amt=Number($('#co2_amount').value||0); const list=store.get('co2',[]); const est=Number((amt*(co2Factors[k]||0.2)).toFixed(2)); list.push({k,amt,est}); store.set('co2',list); renderCO2()})
 function renderCO2(){const list=store.get('co2',[]); const ul=$('#co2_list'); ul.innerHTML=''; let sum=0; list.forEach(x=>{sum+=x.est; const li=document.createElement('li'); li.textContent=`${x.k} – Betrag ${x.amt} CHF – Schätzung ${x.est} kg CO₂`; ul.appendChild(li)}); $('#co2_sum').textContent=`Summe geschätzter CO₂ Werte: ${sum.toFixed(2)} kg`}
 
-// Lernkarten
-const learnCards=[
-  {q:'Was ist Budgetierung',a:'Plane Einnahmen und Ausgaben im Voraus. Lege Ziele fest und prüfe monatlich den Stand.'},
-  {q:'Wie wirkt Zinseszins',a:'Zinsen werden dem Kapital zugerechnet und erwirtschaften selber wieder Zinsen. Früh beginnen lohnt sich.'},
-  {q:'Was ist ein Notgroschen',a:'Ein Geldpolster für unerwartete Ausgaben. Drei Monatsausgaben sind ein guter Richtwert.'},
-  {q:'Sichere Karte online',a:'Nutze 3D Secure, gib Daten nur auf vertrauenswürdigen Seiten ein und prüfe die Adresse sorgfältig.'}
-];
-function renderCards(){
-  const wrap=$('#cards');
-  console.log('Rendering cards...');
-  wrap.innerHTML='';
-  learnCards.forEach((c,i)=>{
-    const d=document.createElement('div');
-    d.className='card';
-    d.innerHTML=`<div class="q">${c.q}</div><div class="a">${c.a}</div><button data-i="${i}" class="reveal">zeigen</button>`;
-    wrap.appendChild(d);
-    const answer = d.querySelector('.a');
-    if(answer) answer.style.display = 'none';
-  });
-  console.log('Cards rendered:', wrap.children.length);
-  $$('.reveal').forEach(btn=>btn.addEventListener('click',e=>{
-    console.log('zeigen button clicked for card', e.target.dataset.i, 'target:', e.target);
-    const i=Number(e.target.dataset.i);
-    const card=$$('.card')[i];
-    card.classList.toggle('show');
-    const answer = card.querySelector('.a');
-    if(card.classList.contains('show')){
-      answer.style.display = 'block';
-    } else {
-      answer.style.display = 'none';
-    }
-    e.target.textContent=card.classList.contains('show')?'verbergen':'zeigen';
-  }));
-}
-
 // Tools
 const RATES={CHF:1, EUR:0.98, USD:1.1, GBP:0.85};
 $('#fx_convert').addEventListener('click',()=>{
@@ -143,10 +107,10 @@ $('#bdg_spent_add').addEventListener('click',()=>{
 })
 
 // Reset
-$('#btn_reset').addEventListener('click',()=>{if(confirm('Alle Demo Daten löschen')){localStorage.clear(); renderGoals(); updateImpactChart(); renderCO2(); renderCards(); renderBudget()}})
+$('#btn_reset').addEventListener('click',()=>{if(confirm('Alle Demo Daten löschen')){localStorage.clear(); renderGoals(); updateImpactChart(); renderCO2(); renderBudget()}})
 
 // Init
 window.addEventListener('DOMContentLoaded',()=>{
   if(!store.get('goals',null)) store.set('goals',[{name:'Notebook',target:1200,saved:120},{name:'Notgroschen',target:900,saved:60}]);
-  renderGoals(); renderCO2(); renderCards(); renderBudget(); updateImpactChart(); initMap();
+  renderGoals(); renderCO2(); renderBudget(); updateImpactChart(); initMap();
 })
