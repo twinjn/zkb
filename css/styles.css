@@ -40,4 +40,11 @@ button:hover{filter:brightness(1.05)}
 
 @media (max-width:600px){
   .mast .top{flex-direction:column;align-items:flex-start}
+  .mainnav{flex-direction:column;gap:12px}
+  .tabs{overflow-x:auto}
+  .actions{flex-direction:column}
+  .inline{flex-direction:column;align-items:stretch}
+  .hero{height:120px}
+  .map{height:260px}
+  .footer{flex-direction:column;align-items:flex-start}
 }

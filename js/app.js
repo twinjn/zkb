@@ -112,5 +112,6 @@ $('#btn_reset').addEventListener('click',()=>{if(confirm('Alle Demo Daten lösch
 // Init
 window.addEventListener('DOMContentLoaded',()=>{
   if(!store.get('goals',null)) store.set('goals',[{name:'Notebook',target:1200,saved:120},{name:'Notgroschen',target:900,saved:60}]);
-  renderGoals(); renderCO2(); renderBudget(); updateImpactChart(); initMap();
+  renderGoals(); renderCO2(); renderBudget(); updateImpactChart();
+  if(window.L && document.getElementById('map')){initMap()}else{const el=document.getElementById('map'); if(el){const p=document.createElement('p'); p.className='muted'; p.textContent='Karte konnte nicht geladen werden.'; el.replaceWith(p)}}
 })
