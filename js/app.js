@@ -24,7 +24,32 @@ const PROJECTS=[
 let map; let currentProject=null;
 function initMap(){
   map=L.map('map').setView([47.3889,8.5186],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+  const tiles=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'});
+  tiles.on('tileerror',()=>{
+    map.removeLayer(tiles);
+    const fallback=L.gridLayer();
+    fallback.createTile=function(){
+      const tile=document.createElement('canvas');
+      const size=this.getTileSize();
+      tile.width=size.x; tile.height=size.y;
+      const ctx=tile.getContext('2d');
+      ctx.fillStyle='#f1f5f9';
+      ctx.fillRect(0,0,size.x,size.y);
+      ctx.strokeStyle='#d1d5db';
+      ctx.strokeRect(0,0,size.x,size.y);
+      ctx.fillStyle='#9ca3af';
+      ctx.font='12px sans-serif';
+      ctx.fillText('offline',8,20);
+      return tile;
+    };
+    fallback.addTo(map);
+    const c=map.getContainer();
+    const info=document.createElement('div');
+    info.className='map_notice';
+    info.textContent='Kartenkacheln konnten nicht geladen werden.';
+    c.appendChild(info);
+  });
+  tiles.addTo(map);
   PROJECTS.forEach(p=>{const m=L.marker([p.lat,p.lng]).addTo(map); m.on('click',()=>showProject(p)); m.bindTooltip(p.title)})
 }
 function showProject(p){currentProject=p; $('#project_info').hidden=false; $('#project_title').textContent=p.title; $('#project_desc').textContent=p.desc}
